@@ -696,6 +696,8 @@ mixin ColumnState implements IPlutoGridState {
   void sortBySortIdx(PlutoColumn column, {bool notify = true}) {
     _updateBeforeColumnSort();
 
+    column.sort = PlutoColumnSort.none;
+
     if (sortOnlyEvent) return;
 
     int compare(a, b) {
@@ -858,10 +860,10 @@ mixin ColumnState implements IPlutoGridState {
 
   void _updateBeforeColumnSort() {
     clearCurrentCell(notify: false);
-
     clearCurrentSelecting(notify: false);
+  }
 
-    // Reset column sort to none.
+  void resetColumnSort() {
     for (var i = 0; i < refColumns.originalList.length; i += 1) {
       refColumns.originalList[i].sort = PlutoColumnSort.none;
     }
