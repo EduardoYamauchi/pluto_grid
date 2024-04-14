@@ -123,7 +123,8 @@ class PlutoGridCellGestureEvent extends PlutoGridEvent {
 
     stateManager.setKeepFocus(true);
 
-    return stateManager.isCurrentCell(cell);
+    // Will always be able to reselect the same cell.
+    return false;
   }
 
   void _selecting(PlutoGridStateManager stateManager) {
@@ -196,8 +197,7 @@ enum PlutoGridGestureType {
 
   bool get isOnLongPressStart => this == PlutoGridGestureType.onLongPressStart;
 
-  bool get isOnLongPressMoveUpdate =>
-      this == PlutoGridGestureType.onLongPressMoveUpdate;
+  bool get isOnLongPressMoveUpdate => this == PlutoGridGestureType.onLongPressMoveUpdate;
 
   bool get isOnLongPressEnd => this == PlutoGridGestureType.onLongPressEnd;
 
