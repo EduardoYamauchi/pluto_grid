@@ -5,6 +5,11 @@ PlutoGrid Plus is a maintained version of https://github.com/bosskmk/pluto_grid
 [![codecov](https://codecov.io/gh/bosskmk/pluto_grid/branch/master/graph/badge.svg)](https://codecov.io/gh/bosskmk/pluto_grid)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+Things changed for this fork:
+
+- Apr 2024: When you apply a sorting in on column, reset the sorting for other columns.
+- Apr 2024: When you recheck in the same cell, the onSelect will be called (by default, when you reclick in the same cell, nothing will happen).
+
 <br>
 
 `PlutoGrid` is a `DataGrid` that can be operated with the keyboard in various situations such as moving cells.  
