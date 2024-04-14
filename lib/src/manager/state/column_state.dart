@@ -117,10 +117,10 @@ abstract class IColumnState {
   /// [column.frozen] is changed to [PlutoColumnFrozen.none]
   /// if the frozen column width constraint is narrow.
   void hideColumn(
-    PlutoColumn column,
-    bool hide, {
-    bool notify = true,
-  });
+      PlutoColumn column,
+      bool hide, {
+        bool notify = true,
+      });
 
   /// Hide or show the [columns] with [hide] value.
   ///
@@ -128,10 +128,10 @@ abstract class IColumnState {
   /// [column.frozen] is changed to [PlutoColumnFrozen.none]
   /// if the frozen column width constraint is narrow.
   void hideColumns(
-    List<PlutoColumn> columns,
-    bool hide, {
-    bool notify = true,
-  });
+      List<PlutoColumn> columns,
+      bool hide, {
+        bool notify = true,
+      });
 
   void sortAscending(PlutoColumn column, {bool notify = true});
 
@@ -163,10 +163,10 @@ abstract class IColumnState {
   /// If the hidden column is a frozen column
   /// The width of the currently frozen column is limited.
   bool limitHideColumn(
-    PlutoColumn column,
-    bool hide, {
-    double accumulateWidth = 0,
-  });
+      PlutoColumn column,
+      bool hide, {
+        double accumulateWidth = 0,
+      });
 }
 
 mixin ColumnState implements IPlutoGridState {
@@ -175,10 +175,10 @@ mixin ColumnState implements IPlutoGridState {
 
   @override
   List<int> get columnIndexes => List.generate(
-        refColumns.length,
+    refColumns.length,
         (index) => index,
-        growable: false,
-      );
+    growable: false,
+  );
 
   @override
   List<int> get columnIndexesForShowFrozen {
@@ -191,8 +191,8 @@ mixin ColumnState implements IPlutoGridState {
       refColumns[i].frozen.isNone
           ? bodyIndexes.add(i)
           : refColumns[i].frozen.isStart
-              ? leftIndexes.add(i)
-              : rightIndexes.add(i);
+          ? leftIndexes.add(i)
+          : rightIndexes.add(i);
     }
 
     return leftIndexes + bodyIndexes + rightIndexes;
@@ -452,7 +452,7 @@ mixin ColumnState implements IPlutoGridState {
     final removeKeys = Set.from(columns.map((e) => e.key));
 
     refColumns.removeWhereFromOriginal(
-      (column) => removeKeys.contains(column.key),
+          (column) => removeKeys.contains(column.key),
     );
 
     resetShowFrozenColumn();
@@ -577,21 +577,17 @@ mixin ColumnState implements IPlutoGridState {
     String maxValue = '';
     bool hasExpandableRowGroup = false;
     for (final row in refRows) {
-      final cell = row.cells.entries
-          .firstWhere((element) => element.key == column.field)
-          .value;
+      final cell = row.cells.entries.firstWhere((element) => element.key == column.field).value;
       var value = column.formattedValueForDisplay(cell.value);
       if (hasRowGroups) {
         if (PlutoDefaultCell.showGroupCount(rowGroupDelegate!, cell)) {
-          final groupCountValue =
-              PlutoDefaultCell.groupCountText(rowGroupDelegate!, row);
+          final groupCountValue = PlutoDefaultCell.groupCountText(rowGroupDelegate!, row);
           if (groupCountValue.isNotEmpty) {
             value = '$value $groupCountValue';
           }
         }
 
-        hasExpandableRowGroup |=
-            PlutoDefaultCell.canExpand(rowGroupDelegate!, cell);
+        hasExpandableRowGroup |= PlutoDefaultCell.canExpand(rowGroupDelegate!, cell);
       }
       if (maxValue.length < value.length) {
         maxValue = value;
@@ -600,8 +596,7 @@ mixin ColumnState implements IPlutoGridState {
 
     // Get size after rendering virtually
     // https://stackoverflow.com/questions/54351655/flutter-textfield-width-should-match-width-of-contained-text
-    final titleTextWidth =
-        _visualTextWidth(column.title, style.columnTextStyle);
+    final titleTextWidth = _visualTextWidth(column.title, style.columnTextStyle);
     final maxValueTextWidth = _visualTextWidth(maxValue, style.cellTextStyle);
 
     // todo : Handle (renderer) width
@@ -610,8 +605,7 @@ mixin ColumnState implements IPlutoGridState {
         column.width +
         [
           (column.titlePadding ?? style.defaultColumnTitlePadding).horizontal,
-          if (column.enableRowChecked)
-            _getEffectiveButtonWidth(context, checkBox: true),
+          if (column.enableRowChecked) _getEffectiveButtonWidth(context, checkBox: true),
           if (column.isShowRightIcon) style.iconSize,
           8,
         ].reduce((acc, a) => acc + a);
@@ -621,8 +615,7 @@ mixin ColumnState implements IPlutoGridState {
         [
           (column.cellPadding ?? style.defaultCellPadding).horizontal,
           if (hasExpandableRowGroup) _getEffectiveButtonWidth(context),
-          if (column.enableRowChecked)
-            _getEffectiveButtonWidth(context, checkBox: true),
+          if (column.enableRowChecked) _getEffectiveButtonWidth(context, checkBox: true),
           if (column.isShowRightIcon) style.iconSize,
           2,
         ].reduce((acc, a) => acc + a);
@@ -644,10 +637,10 @@ mixin ColumnState implements IPlutoGridState {
 
   @override
   void hideColumn(
-    PlutoColumn column,
-    bool hide, {
-    bool notify = true,
-  }) {
+      PlutoColumn column,
+      bool hide, {
+        bool notify = true,
+      }) {
     if (column.hide == hide) {
       return;
     }
@@ -663,10 +656,10 @@ mixin ColumnState implements IPlutoGridState {
 
   @override
   void hideColumns(
-    List<PlutoColumn> columns,
-    bool hide, {
-    bool notify = true,
-  }) {
+      List<PlutoColumn> columns,
+      bool hide, {
+        bool notify = true,
+      }) {
     if (columns.isEmpty) {
       return;
     }
@@ -685,9 +678,9 @@ mixin ColumnState implements IPlutoGridState {
     if (sortOnlyEvent) return;
 
     compare(a, b) => column.type.compare(
-          a.cells[column.field]!.valueForSorting,
-          b.cells[column.field]!.valueForSorting,
-        );
+      a.cells[column.field]!.valueForSorting,
+      b.cells[column.field]!.valueForSorting,
+    );
 
     if (enabledRowGroups) {
       sortRowGroup(column: column, compare: compare);
@@ -707,9 +700,9 @@ mixin ColumnState implements IPlutoGridState {
     if (sortOnlyEvent) return;
 
     compare(b, a) => column.type.compare(
-          a.cells[column.field]!.valueForSorting,
-          b.cells[column.field]!.valueForSorting,
-        );
+      a.cells[column.field]!.valueForSorting,
+      b.cells[column.field]!.valueForSorting,
+    );
 
     if (enabledRowGroups) {
       sortRowGroup(column: column, compare: compare);
@@ -723,6 +716,8 @@ mixin ColumnState implements IPlutoGridState {
   @override
   void sortBySortIdx(PlutoColumn column, {bool notify = true}) {
     _updateBeforeColumnSort();
+
+    column.sort = PlutoColumnSort.none;
 
     if (sortOnlyEvent) return;
 
@@ -784,7 +779,7 @@ mixin ColumnState implements IPlutoGridState {
       } else {
         final checkedField = event.row!.cells[columnField]!.value.toString();
         final checkedColumn = refColumns.originalList.firstWhere(
-          (column) => column.field == checkedField,
+              (column) => column.field == checkedField,
         );
         hideColumn(checkedColumn, event.isChecked != true);
       }
@@ -844,10 +839,10 @@ mixin ColumnState implements IPlutoGridState {
 
   @override
   bool limitHideColumn(
-    PlutoColumn column,
-    bool hide, {
-    double accumulateWidth = 0,
-  }) {
+      PlutoColumn column,
+      bool hide, {
+        double accumulateWidth = 0,
+      }) {
     if (hide == true) {
       return false;
     }
@@ -874,9 +869,9 @@ mixin ColumnState implements IPlutoGridState {
   /// Assume that a column has been added by subtracting the [offsetWidth] value
   /// from the total width while no column has been added yet.
   bool _limitFrozenColumn(
-    PlutoColumnFrozen frozen,
-    double offsetWidth,
-  ) {
+      PlutoColumnFrozen frozen,
+      double offsetWidth,
+      ) {
     if (frozen.isNone) {
       return false;
     }
@@ -888,8 +883,11 @@ mixin ColumnState implements IPlutoGridState {
     clearCurrentCell(notify: false);
 
     clearCurrentSelecting(notify: false);
+  }
 
-    // Reset column sort to none.
+  /// Reset column sort to none.
+  /// This is not used anymore.
+  void resetColumnSort() {
     for (var i = 0; i < refColumns.originalList.length; i += 1) {
       refColumns.originalList[i].sort = PlutoColumnSort.none;
     }
@@ -1047,9 +1045,8 @@ mixin ColumnState implements IPlutoGridState {
       return false;
     }
 
-    final columns = showFrozenColumn
-        ? leftFrozenColumns + bodyColumns + rightFrozenColumns
-        : refColumns;
+    final columns =
+    showFrozenColumn ? leftFrozenColumns + bodyColumns + rightFrozenColumns : refColumns;
 
     final resizeHelper = getColumnsResizeHelper(
       columns: columns,
@@ -1060,8 +1057,7 @@ mixin ColumnState implements IPlutoGridState {
     return resizeHelper.update();
   }
 
-  double _getEffectiveButtonWidth(BuildContext context,
-      {bool checkBox = false}) {
+  double _getEffectiveButtonWidth(BuildContext context, {bool checkBox = false}) {
     final theme = Theme.of(context);
     late double width;
     switch (theme.materialTapTargetSize) {
